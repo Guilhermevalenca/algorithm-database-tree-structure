@@ -1,0 +1,11 @@
+.show-tables {
+  border: 1px solid;
+  border-collapse: collapse;
+  width: 100%;
+
+  & td,
+  th {
+    border: 1px solid;
+    padding: 5px;
+  }
+}

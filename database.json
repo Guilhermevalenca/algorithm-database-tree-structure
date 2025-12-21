@@ -1,0 +1,55 @@
+{
+  "tables": {
+    "users": {
+      "schema": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "age",
+          "type": "int",
+          "nullable": false
+        }
+      ],
+      "rows": []
+    },
+    "posts": {
+      "schema": [
+        {
+          "name": "id",
+          "type": "int",
+          "nullable": false,
+          "primaryKey": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "nullable": false
+        },
+        {
+          "name": "userId",
+          "type": "int",
+          "nullable": false,
+          "foreignKey": {
+            "table": "users",
+            "column": "id"
+          }
+        }
+      ],
+      "rows": []
+    }
+  }
+}
