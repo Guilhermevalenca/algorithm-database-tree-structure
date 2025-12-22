@@ -1,15 +1,16 @@
+/* @import "tailwindcss"; */
 @import "tailwindcss";
 
-.table-columns{
+.table-columns {
   padding-top: 2em;
   display: flex;
   flex-direction: column;
   gap: 4em;
 }
-header{
+header {
   padding: 1.5em;
 }
-main{
+main {
   margin-top: 30vh;
 }
 /* @theme {

@@ -135,6 +135,26 @@ export class Table {
     );
   }
 
+  filter(
+    range: [number, number],
+    column?: Column | undefined,
+    value?: any
+  ): Row[] {
+    let rows = [];
+    if (range[0] === 0 || range[1] === 0) {
+      rows = this.primaryIndex.rangeSearch(
+        range[0] === 0 ? (Number.MIN_SAFE_INTEGER as any) : range[0],
+        range[1] === 0 ? (Number.MAX_SAFE_INTEGER as any) : range[1]
+      );
+    } else {
+      rows = this.primaryIndex.rangeSearch(range[0], range[1]);
+    }
+    if (!column || !value) {
+      return rows;
+    }
+    return rows.filter((row) => row[column.name] === value);
+  }
+
   dump() {
     return {
       schema: this.schema,

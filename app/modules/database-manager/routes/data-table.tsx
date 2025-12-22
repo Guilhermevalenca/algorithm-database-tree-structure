@@ -6,9 +6,24 @@ import type { Row } from "../types/row.type";
 import "../css/show-tables.css";
 import type { Table } from "../classes/table.class";
 import { ShowDataColumn } from "../components/show-data-column";
+import { ShowDataInsertColumn } from "../components/show-data-insert-column";
+import { FilterData } from "../components/filter-data";
+import AppLabel from "~/components/AppLabel";
+import { AppInput } from "~/components/AppInput";
+
+type Filter = {
+  row?: Row | undefined;
+  value?: string | undefined;
+};
 
 export default function DataTableRoute({ params }: Route.ComponentProps) {
   const [table, setTable] = React.useState<Table>();
+  const [isAdding, setIsAdding] = React.useState(false);
+  const [range, setRange] = React.useState<[number, number]>([0, 0]);
+  const [filter, setFilter] = React.useState<Filter>({
+    row: undefined,
+    value: undefined,
+  });
 
   const fetch = React.useCallback(async (db: Database) => {
     //@ts-expect-error exist table_name in params
@@ -37,9 +52,50 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
     }
   }
 
+  async function save(row: Row) {
+    if (table) {
+      const newRow: Row = {
+        ...row,
+      };
+      delete newRow[table.getPrimaryKey()];
+
+      table.insert(newRow);
+      await fetch(Database.load());
+      setIsAdding(false);
+    }
+  }
+
+  async function selectFilter(row: Row | "none", value: string) {
+    setFilter({
+      row: row === "none" ? undefined : row,
+      value: String(value).trim() === "" ? undefined : value,
+    });
+  }
+
   return (
     <>
-      <h2>Dados:</h2>
+      {table && <FilterData table={table} selectFilter={selectFilter} />}
+      <div>
+        <p>Selecione o intervalo de linhas que deseja visualizar:</p>
+        <AppLabel>
+          Valor inicial:
+          <AppInput
+            type="number"
+            onChange={(e) => setRange([Number(e.target.value), range[1]])}
+          />
+          <small>Obs.: 0 exibe todas as linhas</small>
+        </AppLabel>
+        <br />
+        <AppLabel>
+          Valor Final:
+          <AppInput
+            type="number"
+            onChange={(e) => setRange([range[0], Number(e.target.value)])}
+          />
+          <small>Obs.: 0 exibe todas as linhas</small>
+        </AppLabel>
+      </div>
+      <h2 className="text-2xl">Dados:</h2>
       {table && (
         <table className="show-tables">
           <thead>
@@ -51,19 +107,29 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
             </tr>
           </thead>
           <tbody>
-            {table.all().map((row, index) => (
-              <ShowDataColumn
-                key={`row-${index}`}
+            {table
+              // @ts-expect-error filter row and value
+              .filter(range, filter?.row, filter?.value)
+              .map((row, index) => (
+                <ShowDataColumn
+                  key={`row-${index}`}
+                  table={table}
+                  row={row}
+                  deleteRow={deleteRow}
+                  updateRow={updateRow}
+                />
+              ))}
+            {isAdding && (
+              <ShowDataInsertColumn
                 table={table}
-                row={row}
-                deleteRow={deleteRow}
-                updateRow={updateRow}
+                cancel={() => setIsAdding(false)}
+                save={save}
               />
-            ))}
+            )}
           </tbody>
         </table>
       )}
-      <AppButton>Adicionar Coluna</AppButton>
+      <AppButton onClick={() => setIsAdding(true)}>Adicionar Coluna</AppButton>
     </>
   );
 }
