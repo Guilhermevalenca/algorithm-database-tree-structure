@@ -6,6 +6,12 @@ import { ColumnEnum } from "../enums/column.enum";
 import React from "react";
 import { AppButton } from "~/components/AppButton";
 import "../css/form-column.css";
+import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
+import CardContent from "@mui/material/CardContent";
+import { AppCard } from "~/components/AppCard";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 type Props = {
   column: Column;
@@ -22,7 +28,9 @@ export function FormColumn(props: Props) {
   }
   return (
     <>
-      <div className="form-column">
+    <AppCard>
+      <CardContent>
+        <div className="form-column">
         <div>
           <AppLabel>
             Nome da coluna
@@ -135,12 +143,16 @@ export function FormColumn(props: Props) {
           </div>
         </div>
       </div>
-      <AppButton type="button" onClick={submit}>
+      <div className="flex gap-4 mt-6">
+<Button type="button" variant="contained" color="success" startIcon={<AddIcon />} onClick={submit}>
         Adicionar coluna
-      </AppButton>
-      <AppButton type="button" onClick={props.removeColumn}>
+      </Button>
+      <Button type="button" variant="contained" color="error"  startIcon={<RemoveIcon />} onClick={props.removeColumn}>
         limpar coluna
-      </AppButton>
+      </Button>
+      </div>
+        </CardContent> 
+    </AppCard>
     </>
   );
 }

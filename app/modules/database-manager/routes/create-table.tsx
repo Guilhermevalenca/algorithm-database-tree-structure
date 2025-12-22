@@ -10,8 +10,12 @@ import { AppForm } from "~/components/AppForm";
 import AppLabel from "~/components/AppLabel";
 import { AppInput } from "~/components/AppInput";
 import { FormColumn } from "../components/form-column";
-import { AppButton } from "~/components/AppButton";
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
 import { useNavigate } from "react-router";
+import { AppCard } from "~/components/AppCard";
+import Button from '@mui/material/Button';
 
 const defaultColumn = {
   name: "",
@@ -87,12 +91,14 @@ export default function CreateTableRoute() {
   return (
     <>
       <h1>Crie sua tabela aqui!</h1>
-      <AppForm onSubmit={submit}>
+      <Card>
+        <CardContent>
+<AppForm onSubmit={submit}>
         <div>
           <AppLabel>Nome da Tabela</AppLabel>
           <AppInput onChange={(e) => setTableName(String(e.target?.value))} />
         </div>
-        <div>
+        <div className="table-columns">
           <AppLabel>Colunas:</AppLabel>
           {columns.map((column, index) => (
             <FormColumn
@@ -105,8 +111,10 @@ export default function CreateTableRoute() {
           ))}
         </div>
         <br />
-        <AppButton type="submit">Criar Tabela</AppButton>
+        <Button variant="contained" color="secondary" type="submit">Criar Tabela</Button>
       </AppForm>
+        </CardContent>
+      </Card>
     </>
   );
 }
