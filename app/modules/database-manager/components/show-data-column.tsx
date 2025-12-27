@@ -54,8 +54,10 @@ export function ShowDataColumn({ table, row, deleteRow, updateRow }: Props) {
         </td>
       ) : (
         <td>
-          <AppButton onClick={() => setIsEdit(true)}>Editar Coluna</AppButton>
-          <AppButton onClick={() => deleteRow(row)}>Deletar Coluna</AppButton>
+          <AppButton className="mr-2" onClick={() => setIsEdit(true)}>
+            Editar
+          </AppButton>
+          <AppButton onClick={() => deleteRow(row)}>Deletar</AppButton>
         </td>
       )}
     </tr>

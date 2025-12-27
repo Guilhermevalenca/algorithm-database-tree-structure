@@ -15,6 +15,7 @@ export default function DatabaseManagerRoute() {
         Criar Tabela
       </AppButton>
       <ShowTables />
+      <br />
     </>
   );
 }

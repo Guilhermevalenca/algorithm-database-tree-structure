@@ -129,7 +129,9 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
           </tbody>
         </table>
       )}
-      <AppButton onClick={() => setIsAdding(true)}>Adicionar Coluna</AppButton>
+      <AppButton className="mt-2" onClick={() => setIsAdding(true)}>
+        Adicionar dados
+      </AppButton>
     </>
   );
 }
