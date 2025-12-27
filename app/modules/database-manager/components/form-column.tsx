@@ -12,6 +12,9 @@ import CardContent from "@mui/material/CardContent";
 import { AppCard } from "~/components/AppCard";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Select from '@mui/material/Select';
 
 type Props = {
   column: Column;
@@ -19,16 +22,16 @@ type Props = {
   removeColumn: () => void;
   tablesName: string[];
 };
-
 export function FormColumn(props: Props) {
   const [column, setColumn] = React.useState<Column>({ ...props.column });
+  const [hasForeignKey, sethasForeignKey] = React.useState(false);
 
   function submit() {
     props.addColumn(column);
   }
   return (
     <>
-    <AppCard>
+    <AppCard variant="outlined" backgroundColor="paper">
       <CardContent>
         <div className="form-column">
         <div>
@@ -48,7 +51,7 @@ export function FormColumn(props: Props) {
         </div>
         <div>
           <AppLabel>
-            Tipo da coluna
+            Tipo da coluna:
             <AppSelect
               value={column.type}
               onChange={(
@@ -64,25 +67,28 @@ export function FormColumn(props: Props) {
           </AppLabel>
         </div>
         <div>
-          <AppLabel>
-            O campo pode ser nulo?
-            <AppInput
-              type="checkbox"
-              checked={column.nullable}
+          <FormControlLabel
+        label="Pode ser nulo"
+        control={
+          <Checkbox
+            checked={column.nullable}
               onChange={(e) => {
                 setColumn({
                   ...column,
                   nullable: Boolean(e.target?.checked),
                 });
               }}
-            />
-          </AppLabel>
+          />
+        }
+        >
+
+        </FormControlLabel>
         </div>
         <div>
-          <AppLabel>
-            Chave primária
-            <AppInput
-              type="checkbox"
+          <FormControlLabel
+          label="Chave primária"
+          control={
+            <Checkbox
               checked={column.primaryKey}
               onChange={(e) =>
                 setColumn({
@@ -91,13 +97,27 @@ export function FormColumn(props: Props) {
                 })
               }
             />
-          </AppLabel>
+          }
+          >
+          </FormControlLabel>
+          <div>
+<FormControlLabel
+            label="Recebe chave estrangeira"
+            control={<Checkbox
+            checked={hasForeignKey}
+            onChange={(e) => sethasForeignKey(e.target.checked)}
+            />
+              }
+          />
+          </div>
         </div>
         <div>
-          <AppLabel>Chave estrangeira</AppLabel>
+          {hasForeignKey &&(
+            <>
+            <AppLabel>Chave estrangeira</AppLabel>
           <div>
             <AppLabel>
-              Selecione a tabela
+              Selecione a tabela:
               <AppSelect
                 value={column.foreignKey?.table}
                 onChange={(e) =>
@@ -120,7 +140,7 @@ export function FormColumn(props: Props) {
           </div>
           <div>
             <AppLabel>
-              Nome da coluna
+              Nome da coluna:
               <AppInput
                 type="text"
                 value={column.foreignKey?.column}
@@ -136,16 +156,20 @@ export function FormColumn(props: Props) {
               />
               <br />
               <small>
-                Obs.: A Chave estrangeira só é adicionar se adicionar a tabela e
+                Obs.: A Chave estrangeira só é adicionada se adicionar a tabela e
                 coluna
               </small>
             </AppLabel>
           </div>
+            </>
+          )
+
+          }
         </div>
       </div>
       <div className="flex gap-4 mt-6">
 <Button type="button" variant="contained" color="success" startIcon={<AddIcon />} onClick={submit}>
-        Adicionar coluna
+        nova coluna
       </Button>
       <Button type="button" variant="contained" color="error"  startIcon={<RemoveIcon />} onClick={props.removeColumn}>
         limpar coluna

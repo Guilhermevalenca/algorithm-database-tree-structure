@@ -1,17 +1,19 @@
 /* @import "tailwindcss"; */
 @import "tailwindcss";
 
-.table-columns {
-  padding-top: 2em;
-  display: flex;
-  flex-direction: column;
-  gap: 4em;
-}
 header {
   padding: 1.5em;
 }
 main {
   margin-top: 30vh;
+  margin-left: 20vw;
+  margin-right: 20vw;
+}
+select{
+  background-color: white;
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;  
+  padding: 0.5rem;
 }
 /* @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,

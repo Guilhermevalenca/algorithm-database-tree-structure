@@ -15,6 +15,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { useNavigate } from "react-router";
 import { AppCard } from "~/components/AppCard";
+import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 
 const defaultColumn = {
@@ -90,9 +91,9 @@ export default function CreateTableRoute() {
 
   return (
     <>
-      <h1>Crie sua tabela aqui!</h1>
-      <Card>
+      <Card variant="contained" backgroundColor="default">
         <CardContent>
+      <h1 className="text-center ma-2 text-2xl">Crie sua tabela aqui!</h1>
 <AppForm onSubmit={submit}>
         <div>
           <AppLabel>Nome da Tabela</AppLabel>
