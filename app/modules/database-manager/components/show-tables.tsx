@@ -17,7 +17,6 @@ export function ShowTables() {
   }
   return (
     <>
-      <h2>tables</h2>
       {tables.map((table) => (
         <Card
           key={`table-${table.name}`}
@@ -27,9 +26,9 @@ export function ShowTables() {
         >
           <CardContent>
             <div>
-              <p>Tabela: {table.name}</p>
+              <h1 className="text-xl text-center">{table.name}</h1>
               <div>
-                <div className="flex flex-row gap-2 items-center justify-end mb-2">
+                <div className="flex flex-row gap-2 items-center justify-end mb-2 mt-4">
                   <p>Ações:</p>
                   <AppButton
                     onClick={() =>

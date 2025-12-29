@@ -5,14 +5,14 @@ header {
   padding: 1.5em;
 }
 main {
-  margin-top: 30vh;
+  margin-top: 20vh;
   margin-left: 20vw;
   margin-right: 20vw;
 }
-select{
+select {
   background-color: white;
   border-radius: 0.5rem;
-  margin-left: 0.5rem;  
+  margin-left: 0.5rem;
   padding: 0.5rem;
 }
 /* @theme {

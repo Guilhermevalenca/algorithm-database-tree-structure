@@ -5,15 +5,20 @@ import { Database } from "../classes/database.class";
 import { Table } from "../classes/table.class";
 import type { Column } from "../interfaces/column.interface";
 import { ColumnEnum } from "../enums/column.enum";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+
 
 export default function DatabaseManagerRoute() {
   const navigate = useNavigate();
   return (
     <>
-      <div>Gerenciamento de Banco de Dados!</div>
-      <AppButton onClick={() => navigate("/database-manager/create-table")}>
+      <h1 className="text-2xl text-center">Gerenciamento de Banco de Dados</h1>
+      <div className="mt-4 mb-4 flex justify-end">
+        <Button color="success" variant="contained" startIcon={<AddIcon />} onClick={() => navigate("/database-manager/create-table")}>
         Criar Tabela
-      </AppButton>
+      </Button>
+      </div>
       <ShowTables />
       <br />
     </>

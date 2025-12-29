@@ -9,13 +9,7 @@ export default function DefaultLayout() {
     <AppBar>
       <div className="flex flex-row gap-4 ml-auto mr-auto">
     <div>
-          <Link to="/">Home</Link>
-      </div>
-      <div>
-          <Link to="/example">Example</Link>
-      </div>
-      <div>
-          <Link to="/database-manager">Database Manager</Link>
+          <Link className="text-2xl" to="/">Database Manager</Link>
       </div>
       </div>
     </AppBar>

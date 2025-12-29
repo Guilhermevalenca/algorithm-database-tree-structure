@@ -8,11 +8,11 @@ import {
 
 export default [
   layout("layouts/default.tsx", [
-    index("modules/home/route.tsx"),
+    index("modules/database-manager/routes/index.tsx"),
     route("example", "modules/example/route.tsx"),
 
     ...prefix("database-manager", [
-      index("modules/database-manager/routes/index.tsx"),
+      // index("modules/database-manager/routes/index.tsx"),
       route("create-table", "modules/database-manager/routes/create-table.tsx"),
       route(
         "update-table/:table_name",

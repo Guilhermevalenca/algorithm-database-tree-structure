@@ -15,6 +15,7 @@ import CardContent from "@mui/material/CardContent";
 import { AppCard } from "~/components/AppCard";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const defaultColumn = {
   name: "",
@@ -74,46 +75,51 @@ export default function UpdateTableRoute({ params }: Route.ComponentProps) {
 
   return (
     <AppCard className="mb-20">
+      <Button onClick={() => navigate("/")} variant="text" startIcon={<ArrowBackIcon />} size="large">Voltar</Button>
       <CardContent className="flex flex-col gap-4">
         <h2 className="text-center text-2xl">Atualizar {table?.name}</h2>
-      <AppForm onSubmit={submit}>
-        <div>
-          <AppLabel>
-            Nome da tabela:
-            <AppInput
-              type="text"
-              value={tableName}
-              onChange={(e) => setTableName(e.target.value)}
-            />
-          </AppLabel>
-        </div>
-        <div>
-          <AppLabel>
-            Colunas:
-            {columns.map((column, index) => (
-              <FormColumn
-                key={index}
-                column={column}
-                addColumn={(column) => addColumn(column, index)}
-                removeColumn={() => removeColumn(index)}
-                tablesName={allTablesName}
+        <AppForm className="flex flex-col gap-4" onSubmit={submit}>
+          <div>
+            <AppLabel>
+              Nome da tabela:
+              <AppInput
+                type="text"
+                value={tableName}
+                onChange={(e) => setTableName(e.target.value)}
               />
-            ))}
-          </AppLabel>
-        </div>
-        <Button
-          type="button"
-          onClick={() => newColumn()}
-          variant="contained"
-          color="success"
-          startIcon={<AddIcon />}
-         >
-            Adicionar nova coluna
-          </Button>
-        <div>
-          <AppButton type="submit">Atualizar tabela</AppButton>
-        </div>
-      </AppForm>
+            </AppLabel>
+          </div>
+          <div>
+            <AppLabel>
+              Colunas:
+              {columns.map((column, index) => (
+                <FormColumn
+                  key={index}
+                  column={column}
+                  addColumn={(column) => addColumn(column, index)}
+                  removeColumn={() => removeColumn(index)}
+                  tablesName={allTablesName}
+                />
+              ))}
+            </AppLabel>
+          </div>
+          <div className="mt-2 flex justify-end">
+            <Button
+              type="button"
+              onClick={() => newColumn()}
+              variant="contained"
+              color="success"
+              startIcon={<AddIcon />}
+            >
+              Adicionar nova coluna
+            </Button>
+          </div>
+          <div className="mt-10">
+            <Button variant="contained" type="submit" className="w-full">
+              Atualizar tabela
+            </Button>
+          </div>
+        </AppForm>
       </CardContent>
     </AppCard>
   );

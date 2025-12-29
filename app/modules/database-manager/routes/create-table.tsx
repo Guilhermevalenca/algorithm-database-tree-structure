@@ -17,6 +17,7 @@ import { useNavigate } from "react-router";
 import { AppCard } from "~/components/AppCard";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const defaultColumn = {
   name: "",
@@ -99,7 +100,15 @@ export default function CreateTableRoute() {
 
   return (
     <>
-      <Card variant="contained" backgroundColor="default">
+      <Card variant="contained" className="mb-20">
+        <Button
+          onClick={() => navigate("/")}
+          variant="text"
+          startIcon={<ArrowBackIcon />}
+          size="large"
+        >
+          Voltar
+        </Button>
         <CardContent>
           <h1 className="text-center ma-2 text-2xl">Crie sua tabela aqui!</h1>
           <AppForm onSubmit={submit}>
@@ -120,26 +129,23 @@ export default function CreateTableRoute() {
                   tablesName={allTablesName}
                 />
               ))}
-              <AppCard>
-                <CardContent>
-                  <div className="flex gap-4 mt-6">
-                    <Button
-                      type="button"
-                      variant="contained"
-                      color="success"
-                      startIcon={<AddIcon />}
-                      onClick={addColumn}
-                    >
-                      Adicionar coluna
-                    </Button>
-                  </div>
-                </CardContent>
-              </AppCard>
             </div>
-            <br />
-            <Button variant="contained" color="secondary" type="submit">
-              Criar Tabela
-            </Button>
+            <div className="flex justify-end mt-2">
+              <Button
+                type="button"
+                variant="contained"
+                color="success"
+                startIcon={<AddIcon />}
+                onClick={addColumn}
+              >
+                Adicionar coluna
+              </Button>
+            </div>
+            <div className="mt-10">
+              <Button className="w-full" variant="contained" type="submit">
+                Criar Tabela
+              </Button>
+            </div>
           </AppForm>
         </CardContent>
       </Card>

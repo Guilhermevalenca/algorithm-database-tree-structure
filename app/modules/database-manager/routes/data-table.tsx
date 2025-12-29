@@ -1,6 +1,7 @@
 import React from "react";
 import { Database } from "../classes/database.class";
 import type { Route } from "./+types";
+import { useNavigate } from "react-router";
 import { AppButton } from "~/components/AppButton";
 import type { Row } from "../types/row.type";
 import "../css/show-tables.css";
@@ -12,6 +13,8 @@ import AppLabel from "~/components/AppLabel";
 import { AppInput } from "~/components/AppInput";
 import { AppCard } from "~/components/AppCard";
 import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 type Filter = {
   row?: Row | undefined;
@@ -19,6 +22,7 @@ type Filter = {
 };
 
 export default function DataTableRoute({ params }: Route.ComponentProps) {
+  const navigate = useNavigate();
   const [table, setTable] = React.useState<Table>();
   const [isAdding, setIsAdding] = React.useState(false);
   const [range, setRange] = React.useState<[number, number]>([0, 0]);
@@ -85,6 +89,7 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
 
   return (
     <AppCard className="mb-20">
+      <Button onClick={() => navigate("/")} variant="text" startIcon={<ArrowBackIcon />} size="large">Voltar</Button>
       <CardContent className="flex flex-col gap-4">
         <h1 className="text-center text-2xl">Dados de {table?.name}</h1>
 
