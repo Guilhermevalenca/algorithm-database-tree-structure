@@ -90,12 +90,15 @@ export class Table {
 
     if (tablesWithFK.length > 0) {
       for (const table of tablesWithFK) {
-        const column_name = table.schema.find((c) => {
-          return c?.primaryKey;
+        const column_foreign_key_name = table.schema.find((c) => {
+          return c?.foreignKey && c.foreignKey.table === this.name;
         })?.name;
 
         for (const row of table.all()) {
-          if (row?.[String(column_name)] === pk) {
+          if (row?.[String(column_foreign_key_name)] === pk) {
+            const column_name = table.schema.find((c) => {
+              return c?.primaryKey;
+            })?.name;
             table.delete(row?.[String(column_name)]);
           }
         }

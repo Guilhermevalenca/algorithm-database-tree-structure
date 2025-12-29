@@ -1,8 +1,9 @@
+import type { BPlusTree } from "../interfaces/b-plus-tree.interface";
 import type { BPlusNode } from "./b-plus-node.class";
 import { InternalNode } from "./internal-node.class";
 import { LeafNode } from "./leaf-node.class";
 
-export class SimpleBPlusTree<K extends number, V> {
+export class SimpleBPlusTree<K extends number, V> implements BPlusTree<K, V> {
   private root: BPlusNode<K, V>;
   private readonly order = 3;
 
