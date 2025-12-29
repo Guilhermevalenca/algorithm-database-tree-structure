@@ -33,37 +33,37 @@ export function FilterData({ table, selectFilter }: Props) {
     <AppCard variant="outlined" className="p-4 mb-4">
       <h1 className="text-lg">Filtros</h1>
       <div className="flex flex-row flex-nowrap  items-center gap-4">
- <AppLabel>
-        Selecione a coluna:
-        <AppSelect
-          value={rowSelected === "none" ? "none" : rowSelected.name}
-          onChange={(e) => setRowSelected(e.target.value)}
-        >
-          <option value="none">Nenhum</option>
-          {table?.schema.map((column) => (
-            <option key={column.name} value={column.name}>
-              {column.name}
-            </option>
-          ))}
-        </AppSelect>
-      </AppLabel>
-      
+        <AppLabel>
+          Selecione a coluna:
+          <AppSelect
+            value={rowSelected === "none" ? "none" : rowSelected.name}
+            onChange={(e) => setRowSelected(e.target.value)}
+          >
+            <option value="none">Nenhum</option>
+            {table?.schema.map((column) => (
+              <option key={column.name} value={column.name}>
+                {column.name}
+              </option>
+            ))}
+          </AppSelect>
+        </AppLabel>
+
         <AppLabel>
           <div className="flex flex-row items-center whitespace-nowrap">
-Selecione o valor:
-        <AppInput
-          type={
-            rowSelected !== "none"
-              ? //@ts-expect-error rowSelected
-                getTypeInputUtil(rowSelected as Row)
-              : "text"
-          }
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        </div>
-      </AppLabel>
+            Selecione o valor:
+            <AppInput
+              type={
+                rowSelected !== "none"
+                  ? //@ts-expect-error rowSelected
+                    getTypeInputUtil(rowSelected as Row)
+                  : "text"
+              }
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        </AppLabel>
       </div>
-      </AppCard>
+    </AppCard>
   );
 }

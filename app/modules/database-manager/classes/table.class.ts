@@ -46,7 +46,11 @@ export class Table {
     }
 
     for (const column of this.schema) {
-      if (column.foreignKey) {
+      if (
+        column?.foreignKey &&
+        column.foreignKey?.table.trim() !== "" &&
+        column.foreignKey?.column.trim() !== ""
+      ) {
         if (!this.db) {
           throw new Error("Database é necessária para validar FK");
         }
