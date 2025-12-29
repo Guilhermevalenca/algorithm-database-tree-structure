@@ -11,6 +11,8 @@ import { Table } from "../classes/table.class";
 import { useNavigate } from "react-router";
 import swal from "../../../plugins/swal";
 import { AppForm } from "~/components/AppForm";
+import CardContent from "@mui/material/CardContent";
+import { AppCard } from "~/components/AppCard";
 
 const defaultColumn = {
   name: "",
@@ -69,8 +71,9 @@ export default function UpdateTableRoute({ params }: Route.ComponentProps) {
   }
 
   return (
-    <>
-      <h2>Atualize a tabela</h2>
+    <AppCard className="mb-20">
+      <CardContent className="flex flex-col gap-4">
+        <h2 className="text-center text-2xl">Atualizar {table?.name}</h2>
       <AppForm onSubmit={submit}>
         <div>
           <AppLabel>
@@ -98,13 +101,14 @@ export default function UpdateTableRoute({ params }: Route.ComponentProps) {
         </div>
         <br />
         <br />
-        <div>
-          <AppButton type="button" onClick={() => newColumn()}>
+        <AppButton type="button" onClick={() => newColumn()}>
             Adicionar nova coluna
           </AppButton>
+        <div>
           <AppButton type="submit">Atualizar tabela</AppButton>
         </div>
       </AppForm>
-    </>
+      </CardContent>
+    </AppCard>
   );
 }

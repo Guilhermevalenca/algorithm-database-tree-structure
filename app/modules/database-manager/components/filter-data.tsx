@@ -5,6 +5,7 @@ import { AppInput } from "../../../components/AppInput";
 import React from "react";
 import type { Row } from "../types/row.type";
 import { getTypeInputUtil } from "../utils/get-type-input.util";
+import { AppCard } from "~/components/AppCard";
 
 type Props = {
   table: Table;
@@ -29,10 +30,11 @@ export function FilterData({ table, selectFilter }: Props) {
   }
 
   return (
-    <div className="flex">
-      <p>Filtros:</p>
-      <AppLabel>
-        Selecione a coluna
+    <AppCard variant="outlined" className="p-4 mb-4">
+      <h1 className="text-lg">Filtros</h1>
+      <div className="flex flex-row flex-nowrap  items-center gap-4">
+ <AppLabel>
+        Selecione a coluna:
         <AppSelect
           value={rowSelected === "none" ? "none" : rowSelected.name}
           onChange={(e) => setRowSelected(e.target.value)}
@@ -45,8 +47,10 @@ export function FilterData({ table, selectFilter }: Props) {
           ))}
         </AppSelect>
       </AppLabel>
-      <AppLabel>
-        Selecione o valor
+      
+        <AppLabel>
+          <div className="flex flex-row items-center whitespace-nowrap">
+Selecione o valor:
         <AppInput
           type={
             rowSelected !== "none"
@@ -57,7 +61,9 @@ export function FilterData({ table, selectFilter }: Props) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
+        </div>
       </AppLabel>
-    </div>
+      </div>
+      </AppCard>
   );
 }

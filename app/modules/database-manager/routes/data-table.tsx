@@ -10,6 +10,8 @@ import { ShowDataInsertColumn } from "../components/show-data-insert-column";
 import { FilterData } from "../components/filter-data";
 import AppLabel from "~/components/AppLabel";
 import { AppInput } from "~/components/AppInput";
+import { AppCard } from "~/components/AppCard";
+import CardContent from "@mui/material/CardContent";
 
 type Filter = {
   row?: Row | undefined;
@@ -73,29 +75,36 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
   }
 
   return (
-    <>
+    <AppCard className="mb-20">
+      <CardContent className="flex flex-col gap-4">
+<h1 className="text-center text-2xl">Dados de {table?.name}</h1>
       {table && <FilterData table={table} selectFilter={selectFilter} />}
-      <div>
+      <div className="flex flex-col gap-4 p-4">
         <p>Selecione o intervalo de linhas que deseja visualizar:</p>
-        <AppLabel>
-          Valor inicial:
+        <div className="flex flex-row gap-4">
+          <AppLabel>
+            <div className="flex flex-row items-center whitespace-nowrap">
+              Valor inicial:
           <AppInput
             type="number"
             onChange={(e) => setRange([Number(e.target.value), range[1]])}
           />
-          <small>Obs.: 0 exibe todas as linhas</small>
+            </div>
         </AppLabel>
         <br />
         <AppLabel>
-          Valor Final:
+          <div className="flex flex-row items-center whitespace-nowrap">
+            Valor Final:
           <AppInput
             type="number"
             onChange={(e) => setRange([range[0], Number(e.target.value)])}
           />
-          <small>Obs.: 0 exibe todas as linhas</small>
+          </div>
         </AppLabel>
+        </div>
+        <small>Obs.: 0 exibe todas as linhas</small>
       </div>
-      <h2 className="text-2xl">Dados:</h2>
+      <h2 className="text-center text-xl mb-4">Visualização dos dados</h2>
       {table && (
         <table className="show-tables">
           <thead>
@@ -132,6 +141,7 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
       <AppButton className="mt-2" onClick={() => setIsAdding(true)}>
         Adicionar dados
       </AppButton>
-    </>
+      </CardContent>
+    </AppCard>
   );
 }
