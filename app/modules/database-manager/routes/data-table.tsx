@@ -67,80 +67,91 @@ export default function DataTableRoute({ params }: Route.ComponentProps) {
     }
   }
 
-  async function selectFilter(row: Row | "none", value: string) {
+  async function selectFilter(row: Row | "none", value: any) {
+    let setValue: any = value;
+    if (typeof value === "string" && value.trim() === "") {
+      setValue = undefined;
+    }
+
+    if (/^-?\d+(\.\d+)?$/.test(value)) {
+      setValue = Number(value);
+    }
+
     setFilter({
       row: row === "none" ? undefined : row,
-      value: String(value).trim() === "" ? undefined : value,
+      value: setValue,
     });
   }
 
   return (
     <AppCard className="mb-20">
       <CardContent className="flex flex-col gap-4">
-<h1 className="text-center text-2xl">Dados de {table?.name}</h1>
-      {table && <FilterData table={table} selectFilter={selectFilter} />}
-      <div className="flex flex-col gap-4 p-4">
-        <p>Selecione o intervalo de linhas que deseja visualizar:</p>
-        <div className="flex flex-row gap-4">
-          <AppLabel>
-            <div className="flex flex-row items-center whitespace-nowrap">
-              Valor inicial:
-          <AppInput
-            type="number"
-            onChange={(e) => setRange([Number(e.target.value), range[1]])}
-          />
-            </div>
-        </AppLabel>
-        <br />
-        <AppLabel>
-          <div className="flex flex-row items-center whitespace-nowrap">
-            Valor Final:
-          <AppInput
-            type="number"
-            onChange={(e) => setRange([range[0], Number(e.target.value)])}
-          />
-          </div>
-        </AppLabel>
-        </div>
-        <small>Obs.: 0 exibe todas as linhas</small>
-      </div>
-      <h2 className="text-center text-xl mb-4">Visualização dos dados</h2>
-      {table && (
-        <table className="show-tables">
-          <thead>
-            <tr>
-              {table.schema.map((column) => (
-                <th key={`column-${column.name}`}>{column.name}</th>
-              ))}
-              <th>Actions:</th>
-            </tr>
-          </thead>
-          <tbody>
-            {table
-              // @ts-expect-error filter row and value
-              .filter(range, filter?.row, filter?.value)
-              .map((row, index) => (
-                <ShowDataColumn
-                  key={`row-${index}`}
-                  table={table}
-                  row={row}
-                  deleteRow={deleteRow}
-                  updateRow={updateRow}
+        <h1 className="text-center text-2xl">Dados de {table?.name}</h1>
+
+        {table && <FilterData table={table} selectFilter={selectFilter} />}
+
+        <div className="flex flex-col gap-4 p-4">
+          <p>Selecione o intervalo de linhas que deseja visualizar:</p>
+          <div className="flex flex-row gap-4">
+            <AppLabel>
+              <div className="flex flex-row items-center whitespace-nowrap">
+                Valor inicial:
+                <AppInput
+                  type="number"
+                  onChange={(e) => setRange([Number(e.target.value), range[1]])}
                 />
-              ))}
-            {isAdding && (
-              <ShowDataInsertColumn
-                table={table}
-                cancel={() => setIsAdding(false)}
-                save={save}
-              />
-            )}
-          </tbody>
-        </table>
-      )}
-      <AppButton className="mt-2" onClick={() => setIsAdding(true)}>
-        Adicionar dados
-      </AppButton>
+              </div>
+            </AppLabel>
+            <br />
+            <AppLabel>
+              <div className="flex flex-row items-center whitespace-nowrap">
+                Valor Final:
+                <AppInput
+                  type="number"
+                  onChange={(e) => setRange([range[0], Number(e.target.value)])}
+                />
+              </div>
+            </AppLabel>
+          </div>
+          <small>Obs.: 0 exibe todas as linhas</small>
+        </div>
+        <h2 className="text-center text-xl mb-4">Visualização dos dados</h2>
+        {table && (
+          <table className="show-tables">
+            <thead>
+              <tr>
+                {table.schema.map((column) => (
+                  <th key={`column-${column.name}`}>{column.name}</th>
+                ))}
+                <th>Actions:</th>
+              </tr>
+            </thead>
+            <tbody>
+              {table
+                // @ts-expect-error filter row and value
+                .filter(range, filter?.row, filter?.value)
+                .map((row, index) => (
+                  <ShowDataColumn
+                    key={`row-${index}`}
+                    table={table}
+                    row={row}
+                    deleteRow={deleteRow}
+                    updateRow={updateRow}
+                  />
+                ))}
+              {isAdding && (
+                <ShowDataInsertColumn
+                  table={table}
+                  cancel={() => setIsAdding(false)}
+                  save={save}
+                />
+              )}
+            </tbody>
+          </table>
+        )}
+        <AppButton className="mt-2" onClick={() => setIsAdding(true)}>
+          Adicionar dados
+        </AppButton>
       </CardContent>
     </AppCard>
   );
