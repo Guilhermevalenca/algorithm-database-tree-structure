@@ -13,6 +13,8 @@ import swal from "../../../plugins/swal";
 import { AppForm } from "~/components/AppForm";
 import CardContent from "@mui/material/CardContent";
 import { AppCard } from "~/components/AppCard";
+import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
 
 const defaultColumn = {
   name: "",
@@ -99,11 +101,15 @@ export default function UpdateTableRoute({ params }: Route.ComponentProps) {
             ))}
           </AppLabel>
         </div>
-        <br />
-        <br />
-        <AppButton type="button" onClick={() => newColumn()}>
+        <Button
+          type="button"
+          onClick={() => newColumn()}
+          variant="contained"
+          color="success"
+          startIcon={<AddIcon />}
+         >
             Adicionar nova coluna
-          </AppButton>
+          </Button>
         <div>
           <AppButton type="submit">Atualizar tabela</AppButton>
         </div>

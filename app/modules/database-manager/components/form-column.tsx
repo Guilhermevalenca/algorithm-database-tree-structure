@@ -14,7 +14,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Select from "@mui/material/Select";
+import CheckIcon from '@mui/icons-material/Check';
 
 type Props = {
   column: Column;
@@ -168,7 +168,7 @@ export function FormColumn(props: Props) {
               type="button"
               variant="contained"
               color="success"
-              startIcon={<AddIcon />}
+              startIcon={<CheckIcon />}
               onClick={submit}
             >
               salvar coluna
