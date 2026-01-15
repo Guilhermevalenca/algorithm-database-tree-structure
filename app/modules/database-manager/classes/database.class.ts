@@ -2,7 +2,7 @@ import { Table } from "./table.class";
 
 export class Database {
   private tables = new Map<string, Table>();
-  private static readonly FILE = "database.json";
+  // private static readonly FILE = "database.json";
 
   addTable(table: Table) {
     this.tables.set(table.name, table);
