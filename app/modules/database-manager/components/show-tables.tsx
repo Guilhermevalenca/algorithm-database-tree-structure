@@ -10,10 +10,11 @@ import Card from "@mui/material/Card";
 export function ShowTables() {
   const navigate = useNavigate();
   const db = Database.load();
-  const [tables] = React.useState(db.getTables());
+  const [tables, setTables] = React.useState(db.getTables());
 
   function deleteTable(table_name: string) {
     db.deleteTable(table_name);
+    setTables(db.getTables());
   }
   return (
     <>
