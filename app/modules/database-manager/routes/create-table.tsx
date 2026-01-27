@@ -89,7 +89,7 @@ export default function CreateTableRoute() {
         data.pop();
       }
       new Table(tableName, data, db);
-      navigate("/database-manager");
+      navigate("/");
     } catch (error) {
       console.log(error);
       swal.fire({

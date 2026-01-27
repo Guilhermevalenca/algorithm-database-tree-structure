@@ -17,6 +17,15 @@ export class Table {
     this.primaryIndex = new SimpleBPlusTree<number, Row>();
     this.db = db;
 
+    try {
+      const oldTableExist = this.db.getTable(name);
+      if (oldTableExist) {
+        this.primaryIndex = oldTableExist.primaryIndex;
+      }
+    } catch (error) {
+      //error ignorado
+    }
+
     db.addTable(this);
   }
 
@@ -61,7 +70,7 @@ export class Table {
         const exists = foreignTable.findByPK(fkValue);
         if (!exists) {
           throw new Error(
-            `Violação de chave estrangeira: ${column.name} -> ${column.foreignKey.table}.${column.foreignKey.column}`
+            `Violação de chave estrangeira: ${column.name} -> ${column.foreignKey.table}.${column.foreignKey.column}`,
           );
         }
       }
@@ -138,20 +147,20 @@ export class Table {
   all(): Row[] {
     return this.primaryIndex.rangeSearch(
       Number.MIN_SAFE_INTEGER as any,
-      Number.MAX_SAFE_INTEGER as any
+      Number.MAX_SAFE_INTEGER as any,
     );
   }
 
   filter(
     range: [number, number],
     column?: Column | undefined,
-    value?: any
+    value?: any,
   ): Row[] {
     let rows = [];
     if (range[0] === 0 || range[1] === 0) {
       rows = this.primaryIndex.rangeSearch(
         range[0] === 0 ? (Number.MIN_SAFE_INTEGER as any) : range[0],
-        range[1] === 0 ? (Number.MAX_SAFE_INTEGER as any) : range[1]
+        range[1] === 0 ? (Number.MAX_SAFE_INTEGER as any) : range[1],
       );
     } else {
       rows = this.primaryIndex.rangeSearch(range[0], range[1]);
@@ -167,7 +176,7 @@ export class Table {
       schema: this.schema,
       rows: this.primaryIndex.rangeSearch(
         Number.MIN_SAFE_INTEGER as any,
-        Number.MAX_SAFE_INTEGER as any
+        Number.MAX_SAFE_INTEGER as any,
       ),
     };
   }

@@ -27,7 +27,7 @@ export function ShowDataInsertColumn({ table, cancel, save }: Props) {
                 : newRow[column.name]
             }
             onChange={(e) =>
-              setNewRow({ ...newRow, [column.name]: e.target.value })
+              setNewRow({ ...newRow, [column.name]: isNaN(Number(e.target.value)) ? e.target.value : Number(e.target.value) })
             }
             disabled={column.name === table.getPrimaryKey()}
           />
